@@ -25,6 +25,25 @@ context. The symbol **R$** is used for monetary results.
 
 
 ```
+====================================================
+                     DATASET
+====================================================
+```
+
+This project uses the Brazilian E-Commerce Public Dataset by Olist, a relational e-commerce dataset containing information about customers, orders, order items, payments, products, and product categories.
+
+The analysis uses the following tables:
+- customers
+- orders
+- order_items
+- order_payments
+- products
+- product_category_name_translation
+
+The dataset covers transactions from 2016 to 2018 and is analyzed in MySQL to answer the eight capstone business questions.
+
+
+```
 ========================================================
                   BUSINESS QUESTIONS
 ========================================================
