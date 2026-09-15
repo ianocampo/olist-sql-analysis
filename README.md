@@ -350,3 +350,12 @@ before publishing governed financial KPIs.
 ### BUSINESS ANALYSIS 8 — TOP CATEGORY REVENUE SHARE
 
 [View SQL](q8_top_category_revenue_share.sql)
+
+
+
+=================================================
+### ONE-PAGE INSIGHT SUMMARY
+
+[View Insight Summary](Olist_Insight_Summary.pdf)
+
+==================================================
