@@ -1,7 +1,6 @@
 -- Question 7:
 -- How many customers are repeat vs one-time buyers?
 
-
 -- ============================================================
 -- Q7: MAIN QUERY — REPEAT VS ONE-TIME BUYERS
 -- ============================================================

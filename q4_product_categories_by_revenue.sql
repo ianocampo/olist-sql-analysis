@@ -1,7 +1,17 @@
 -- Question 4:
 -- Which product categories generate the most revenue?
 
--- Q4 Query & Result
+-- ============================================================
+-- Q4: MAIN QUERY — PRODUCT CATEGORY REVENUE
+-- ============================================================
+-- Calculate total product revenue for each category, then rank
+-- categories from highest to lowest revenue.
+--
+-- Category names are translated to English when available.
+-- If no translation exists, use the original category name;
+-- if no category name exists, label it as Unknown.
+-- Q4 RESULT: Product Categories by Revenue
+
 SELECT
     COALESCE(
         pct.product_category_name_english,

@@ -1,7 +1,17 @@
 -- Question 5:
 -- Rank top 3 products within each category by revenue.
 
--- Q5 Query & Result
+-- ============================================================
+-- Q5: MAIN QUERY — TOP 3 PRODUCTS PER CATEGORY BY REVENUE
+-- ============================================================
+-- Calculate revenue for each product within its category,
+-- then rank products from highest to lowest revenue inside
+-- each category and return only the top three.
+--
+-- ROW_NUMBER resets the ranking for each product category.
+-- Category names use the same English-name fallback logic as Q4.
+-- Q5 RESULT: Top 3 Products per Category by Revenue
+
 WITH product_revenue AS (
     SELECT
         COALESCE(
