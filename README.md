@@ -32,6 +32,8 @@ context. The symbol **R$** is used for monetary results.
 
 This project uses the Brazilian E-Commerce Public Dataset by Olist, a relational e-commerce dataset containing information about customers, orders, order items, payments, products, and product categories.
 
+**Download the original public dataset:** [Olist on Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (CC BY-NC-SA 4.0; Kaggle sign-in may be required). **Reproduce the analysis:** [CSV-to-MySQL table mapping and setup notes](DATA_SOURCE.md).
+
 The analysis uses the following tables:
 - customers
 - orders
