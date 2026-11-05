@@ -48,7 +48,7 @@ jobs:
           d.rounded_rectangle((47,44,237,50),radius=4,fill=teal)
           d.text((48,84),"MYSQL  /  DATAGRIP  /  ANALYTICS",font=f(17,True),fill=teal)
           d.text((46,166),"Olist E-Commerce",font=f(44,True),fill=white)
-          d.text((46,225),"SQL Business Analysis",font=f(39,True),fill=white)
+          d.text((46,225),"SQL Business Analysis",font=f(34,True),fill=white)
           d.text((48,338),"Eight business questions",font=f(22),fill=muted)
           d.text((48,375),"Revenue · Customers · Products",font=f(18),fill=muted)
           d.text((48,410),"Real, inspectable SQL scripts",font=f(18),fill=muted)
