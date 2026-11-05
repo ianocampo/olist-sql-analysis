@@ -1,0 +1,90 @@
+name: Build authentic SQL code social preview
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-social-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out original SQL scripts
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Pillow
+        run: python -m pip install Pillow
+      - name: Render authentic code excerpt from the published SQL query
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageDraw, ImageFont
+
+          file=Path("q8_top_category_revenue_share.sql")
+          assert file.exists(), "Real project SQL source is missing"
+          lines=file.read_text(encoding="utf-8").splitlines()
+          # This is a verbatim excerpt, not a fabricated query output.
+          start=next(i for i,t in enumerate(lines) if t.strip()=="category_share AS (")
+          excerpt=[t for t in lines[start:] if t.strip()]
+          assert any("percentage_of_total_revenue" in line for line in excerpt)
+          W,H=1280,640
+          im=Image.new("RGB",(W,H))
+          px=im.load()
+          for y in range(H):
+              for x in range(W):
+                  k=x/W
+                  px[x,y]=(round(10+8*k),round(29+35*k),round(42+29*k))
+          d=ImageDraw.Draw(im)
+          font="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+          bold="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+          mono="/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
+          def f(n,b=False): return ImageFont.truetype(bold if b else font,n)
+          teal=(94,234,212);white=(248,252,255);muted=(199,218,223)
+          d.rounded_rectangle((47,44,237,50),radius=4,fill=teal)
+          d.text((48,84),"MYSQL  /  DATAGRIP  /  ANALYTICS",font=f(17,True),fill=teal)
+          d.text((46,166),"Olist E-Commerce",font=f(44,True),fill=white)
+          d.text((46,225),"SQL Business Analysis",font=f(39,True),fill=white)
+          d.text((48,338),"Eight business questions",font=f(22),fill=muted)
+          d.text((48,375),"Revenue · Customers · Products",font=f(18),fill=muted)
+          d.text((48,410),"Real, inspectable SQL scripts",font=f(18),fill=muted)
+          d.rounded_rectangle((46,523,407,573),outline=teal,width=2,radius=10)
+          d.text((66,539),"VIEW ALL EIGHT QUERIES",font=f(16,True),fill=white)
+          d.text((47,606),"data.ianocamposystems.com",font=f(16),fill=(168,213,217))
+          x,y,w,h=543,110,694,412
+          d.rounded_rectangle((x-4,y-4,x+w+4,y+h+4),radius=16,fill=(113,217,215))
+          d.rounded_rectangle((x,y,x+w,y+h),radius=12,fill=(15,27,39))
+          d.rounded_rectangle((x,y,x+w,y+51),radius=12,fill=(29,52,64))
+          d.rectangle((x,y+32,x+w,y+51),fill=(29,52,64))
+          d.ellipse((x+20,y+18,x+30,y+28),fill=(227,102,101))
+          d.ellipse((x+39,y+18,x+49,y+28),fill=(225,183,87))
+          d.ellipse((x+58,y+18,x+68,y+28),fill=(93,196,159))
+          d.text((x+85,y+15),"q8_top_category_revenue_share.sql",font=ImageFont.truetype(mono,15),fill=white)
+          fm=ImageFont.truetype(mono,13)
+          for i,line in enumerate(excerpt[:16]):
+              yy=y+68+i*20
+              # Query text is lifted verbatim from the published script.
+              if yy>y+h-18: break
+              lead=line.lstrip().upper()
+              color=(130,220,212) if lead.startswith(("SELECT","FROM","JOIN","LEFT","GROUP","ORDER","LIMIT","ROUND","SUM","CATEGORY_SHARE","WHERE")) else (220,231,237)
+              d.text((x+21,yy),line[:80],font=fm,fill=color)
+          d.rounded_rectangle((565,534,1203,571),radius=8,fill=(13,46,55))
+          d.text((585,546),"ACTUAL REPOSITORY SQL CODE · NO INVENTED QUERY RESULTS",font=f(12,True),fill=(213,239,240))
+          out=Path("assets/social-preview.png")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          im.save(out,optimize=True)
+          print("Created",out,"from exact file",file)
+          PY
+      - name: Publish the branded evidence preview
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f -- assets/social-preview.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Add branded SQL preview rendered from authentic project code"
+            git push
+          fi
