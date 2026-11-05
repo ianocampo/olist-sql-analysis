@@ -4,6 +4,10 @@
 > product performance, customer segmentation, repeat purchasing,
 > and category revenue using the Olist e-commerce dataset.
 
+![Authentic Olist SQL source preview composed from the published q8 category revenue-share query](assets/social-preview.png)
+
+*Branded image uses the exact published SQL code, not fabricated DataGrip output or query results.*
+
 
 ```
 ========================================================
